@@ -1,0 +1,23 @@
+{
+    "SELECT": "SELECT query to retrieve data from a table",
+    "INSERT": "Insert new records into a table",
+    "UPDATE": "Update existing records in a table",
+    "DELETE": "Delete records from a table",
+    "WHERE": "Filter results using conditions",
+    "JOIN": "Join related tables",
+    "GROUP_BY": "Group results by column values",
+    "ORDER_BY": "Order results by column",
+    "HAVING": "Filter groups of results",
+    "LIMIT": "Limit the number of results",
+    "UNION": "Combine results from multiple SELECT queries",
+    "ATTRIBUTE_CONSTANT_PAIR": "Attribute-value pair required for the update block",
+    "CREATE_TABLE": "Create a new table in the database",
+    "ALTER_TABLE": "Modify the structure of an existing table",
+    "DROP_TABLE": "Delete a table from the database",
+    "BEGIN_TRANSACTION": "Start an SQL transaction",
+    "COMMIT": "Commit the transaction changes",
+    "ROLLBACK": "Rollback the transaction changes",
+    "ATTRIBUTE": "Select an attribute from the table",
+    "CONSTANT": "Define a constant value to use in queries",
+    "CONDITION": "Logical condition to filter results"
+  }

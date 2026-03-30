@@ -1,0 +1,26 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# SQL Bloques — Overrides para desarrollo local
+#
+# Expone MySQL y BFF al host para herramientas externas (DBeaver, Postman).
+# nginx no se levanta — el frontend corre con `npm run dev` (Vite proxy).
+#
+# Usage (desde la raíz del proyecto):
+#   docker compose -f infra/docker-compose.yml -f infra/docker-compose.dev.yml \
+#     --env-file .env up -d mysql
+# ─────────────────────────────────────────────────────────────────────────────
+services:
+
+  mysql:
+    ports:
+      - "3307:3306"   # Conectar con DBeaver / TablePlus desde el host
+
+  bff:
+    ports:
+      - "3001:3001"   # Acceso directo para Postman / curl desde el host
+    environment:
+      NODE_ENV: development
+
+  # nginx no se necesita en dev — el proxy de Vite maneja /api → :3001
+  nginx:
+    profiles:
+      - production

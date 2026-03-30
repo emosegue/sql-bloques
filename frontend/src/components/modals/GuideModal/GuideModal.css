@@ -1,0 +1,81 @@
+/* Estructura base consistente */
+.guide-modal-container {
+  max-width: 600px;
+  min-width: 400px;
+  width: 90%;
+  margin: 10vh auto;
+  padding: 32px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+/* Título consistente */
+.guide-modal-title {
+  text-align: center;
+  margin-bottom: 24px !important;
+  color: #1976d2;
+  font-weight: 600 !important;
+  font-size: 1.5rem;
+}
+
+/* Contenido */
+.guide-modal-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 16px;
+}
+
+.guide-section {
+  margin-bottom: 24px !important;
+  line-height: 1.6;
+}
+
+/* Estilo refinado para el bloque de código */
+.guide-section code {
+  background-color: #e3f2fd; /* azul claro */
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: #0d47a1; /* azul oscuro para buen contraste */
+  font-size: 0.95em;
+}
+
+/* Acciones - Consistente */
+.guide-modal-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+/* Scrollbar - Consistente */
+.guide-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.guide-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.guide-modal-content::-webkit-scrollbar-thumb {
+  background: #1976d2;
+  border-radius: 4px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .guide-modal-container {
+    min-width: 90%;
+    padding: 24px;
+  }
+}
+
+
+.guide-image {
+  display: block;
+  margin: 16px auto 0 auto;
+  max-width: 100%;
+  height: auto;
+}

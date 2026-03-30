@@ -1,0 +1,31 @@
+.custom-tabs {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .custom-tab {
+    text-transform: none;
+    font-weight: normal;
+    color: #757575;
+    transition: color 0.3s ease;
+  }
+  
+  .custom-tab-active {
+    font-weight: bold;
+    color: #1976d2;
+  }
+  
+  .tab-panel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+  
+  .tab-panel--hidden {
+    display: none;
+  }
+  
+  .tab-panel--visible {
+    display: block;
+  }
+  

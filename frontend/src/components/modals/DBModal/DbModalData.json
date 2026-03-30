@@ -1,0 +1,74 @@
+{
+  "es": {
+    "titles": {
+      "main": "Gestión de Conexiones",
+      "deleteConfirm": "Confirmar eliminación"
+    },
+    "buttons": {
+      "newConnection": "Nueva Conexión",
+      "delete": "Eliminar",
+      "close": "Cerrar"
+    },
+    "labels": {
+      "createdAt": "Creado",
+      "connected": "CONECTADO"
+    },
+    "messages": {
+      "noConnections": "No hay conexiones disponibles",
+      "deleteConfirm": "¿Estás seguro de que deseas eliminar esta conexión?"
+    },
+    "status": {
+      "testing": "Probando conexiones..."
+    },
+    "errors": {
+      "load": "Error al cargar conexiones",
+      "connect": "Error al conectar",
+      "schema": "Error al obtener esquema"
+    },
+    "snackbar": {
+      "updated": "Conexión actualizada",
+      "created": "Conexión creada",
+      "saveError": "Error al guardar",
+      "successTest": "Conexión exitosa",
+      "failedTest": "La conexión no responde",
+      "deleted": "Conexión eliminada",
+      "deleteError": "Error al eliminar"
+    }
+  },
+  "en": {
+    "titles": {
+      "main": "Connection Manager",
+      "deleteConfirm": "Confirm Deletion"
+    },
+    "buttons": {
+      "newConnection": "New Connection",
+      "delete": "Delete",
+      "close": "Close"
+    },
+    "labels": {
+      "createdAt": "Created",
+      "connected": "CONNECTED"
+    },
+    "messages": {
+      "noConnections": "No connections available",
+      "deleteConfirm": "Are you sure you want to delete this connection?"
+    },
+    "status": {
+      "testing": "Testing connections..."
+    },
+    "errors": {
+      "load": "Error loading connections",
+      "connect": "Connection failed",
+      "schema": "Error fetching schema"
+    },
+    "snackbar": {
+      "updated": "Connection updated",
+      "created": "Connection created",
+      "saveError": "Error saving connection",
+      "successTest": "Connection successful",
+      "failedTest": "Connection failed",
+      "deleted": "Connection deleted",
+      "deleteError": "Error deleting connection"
+    }
+  }
+}

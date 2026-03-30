@@ -1,0 +1,23 @@
+{
+    "SELECT": "Consulta SELECT para recuperar datos de una tabla",
+    "INSERT": "Insertar nuevos registros en una tabla",
+    "UPDATE": "Actualizar registros existentes en una tabla",
+    "DELETE": "Eliminar registros de una tabla",
+    "WHERE": "Filtrar resultados con condiciones",
+    "JOIN": "Unir tablas relacionadas",
+    "GROUP_BY": "Agrupar resultados por valores de columna",
+    "ORDER_BY": "Ordenar resultados por columna",
+    "HAVING": "Filtrar grupos de resultados",
+    "LIMIT": "Limitar el número de resultados",
+    "UNION": "Combinar resultados de múltiples consultas SELECT",
+    "ATTRIBUTE_CONSTANT_PAIR": "Par atributo valor, necesario para el bloque actualizar",
+    "CREATE_TABLE": "Crear una nueva tabla en la base de datos",
+    "ALTER_TABLE": "Modificar la estructura de una tabla existente",
+    "DROP_TABLE": "Eliminar una tabla de la base de datos",
+    "BEGIN_TRANSACTION": "Iniciar una transacción SQL",
+    "COMMIT": "Confirmar los cambios de la transacción",
+    "ROLLBACK": "Revertir los cambios de la transacción",
+    "ATTRIBUTE": "Seleccionar un atributo de la tabla",
+    "CONSTANT": "Definir un valor constante para usar en consultas",
+    "CONDITION": "Condición lógica para filtrar resultados"
+  }

@@ -1,0 +1,80 @@
+name: sqlbloques
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SQL Bloques — Production Docker Compose
+#
+# Usage (desde la raíz del proyecto):
+#   cp .env.example .env
+#   docker compose -f infra/docker-compose.yml --env-file .env up -d --build
+#
+# Services:
+#   mysql   — MySQL 8.0 con bases de datos educativas pre-seeded
+#   bff     — Node/Express API (solo accesible internamente por nginx)
+#   nginx   — Sirve el build de React + proxea /api → bff
+#
+# Para cambiar el base path (ej. servir en /sqlbloques):
+#   Setear BASE_PATH=/sqlbloques en .env y reconstruir:
+#   docker compose -f infra/docker-compose.yml --env-file .env up -d --build
+# ─────────────────────────────────────────────────────────────────────────────
+services:
+
+  # ── MySQL ──────────────────────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER:-sqlbloques}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-sqlbloques}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Init scripts se ejecutan en orden alfabético al primer arranque
+      - ../bff/script/universidad.sql:/docker-entrypoint-initdb.d/01-universidad.sql:ro
+      - ../bff/script/sistema_ventas.sql:/docker-entrypoint-initdb.d/02-sistema_ventas.sql:ro
+      - ../bff/script/04-hospital.sql:/docker-entrypoint-initdb.d/03-hospital.sql:ro
+      - ../bff/script/03-grants.sql:/docker-entrypoint-initdb.d/04-grants.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ── BFF ────────────────────────────────────────────────────────────────────
+  bff:
+    build: ../bff
+    restart: unless-stopped
+    environment:
+      API_TOKEN: ${API_TOKEN}
+      PORT: 3001
+      NODE_ENV: production
+      SQLITE_PATH: /app/data/database.sqlite
+      SEED_CONNECTIONS: "true"
+      SEED_DB_HOST: mysql
+      SEED_DB_PORT: 3306
+      SEED_DB_USER: ${MYSQL_USER:-sqlbloques}
+      SEED_DB_PASSWORD: ${MYSQL_PASSWORD:-sqlbloques}
+    volumes:
+      - bff_data:/app/data
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # ── Nginx (frontend + reverse proxy) ──────────────────────────────────────
+  nginx:
+    build:
+      context: ../frontend
+      args:
+        BASE_PATH: ${BASE_PATH:-}
+    restart: unless-stopped
+    environment:
+      BASE_PATH: ${BASE_PATH:-}
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - bff
+
+volumes:
+  mysql_data:
+  bff_data:

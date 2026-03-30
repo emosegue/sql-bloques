@@ -1,0 +1,78 @@
+{
+  "es": {
+    "title": "Guía Rápida",
+    "sections": [
+      {
+        "title": "Conexión a la Base de Datos",
+        "items": [
+          { "text": "<strong>1. Datos demo:</strong> Prueba la interfaz sin conexión real (solo visualización, no ejecutable)." },
+          { "text": "<strong>2. Conexión existente:</strong> Selecciona una conexión guardada y verifica el punto verde de conexión activa." },
+          { "text": "<strong>3. Nueva conexión:</strong> Completa el host, puerto, credenciales y nombre de la base de datos para conectar." }
+        ]
+      },
+      {
+        "title": "Uso Básico",
+        "items": [
+          { "text": "1. Arrastra y conecta bloques SQL en el área de trabajo." },
+          { "text": "2. Construye visualmente tu consulta." },
+          { "text": "3. Ejecuta y visualiza resultados si estás conectado." }
+        ]
+      },
+      {
+        "title": "Esquema Dinámico",
+        "items": [
+          { "text": "• Al conectarte, se muestra un <strong>esquema dinámico</strong> de la base de datos disponible." },
+          { "text": "• Puedes ver todas las tablas, columnas y tipos de datos actuales." },
+          { "text": "• El esquema se actualiza automáticamente si cambias de conexión." }
+        ]
+      },
+      {
+        "title": "Consejos Útiles",
+        "items": [
+          { "text": "• Punto verde = Conexión activa." },
+          { "text": "• Siempre prueba las conexiones antes de ejecutar consultas." },
+          { "text": "• Verifica los permisos de usuario de la base de datos." }
+        ]
+      }
+    ],
+    "buttonText": "Comenzar"
+  },
+  "en": {
+    "title": "Quick Guide",
+    "sections": [
+      {
+        "title": "Database Connection",
+        "items": [
+          { "text": "<strong>1. Demo Data:</strong> Try the interface without a real connection (only visualization, not executable)." },
+          { "text": "<strong>2. Existing Connection:</strong> Select a saved connection and check the green dot for active status." },
+          { "text": "<strong>3. New Connection:</strong> Fill in host, port, credentials, and database name to connect." }
+        ]
+      },
+      {
+        "title": "Basic Usage",
+        "items": [
+          { "text": "1. Drag and connect SQL blocks in the workspace." },
+          { "text": "2. Build your query visually." },
+          { "text": "3. Execute and see results if connected." }
+        ]
+      },
+      {
+        "title": "Dynamic Schema",
+        "items": [
+          { "text": "• Upon connecting, a <strong>dynamic schema</strong> of the available database is displayed." },
+          { "text": "• You can view all current tables, columns, and data types." },
+          { "text": "• The schema updates automatically when changing connections." }
+        ]
+      },
+      {
+        "title": "Useful Tips",
+        "items": [
+          { "text": "• Green dot = Active connection." },
+          { "text": "• Always test connections before executing queries." },
+          { "text": "• Verify user permissions on the database." }
+        ]
+      }
+    ],
+    "buttonText": "Start"
+  }
+}

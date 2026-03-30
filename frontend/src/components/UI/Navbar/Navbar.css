@@ -1,0 +1,130 @@
+/* Estilos generales del navbar */
+.navbar-container {
+  background-color: #3f51b5;
+  padding: 8px 16px;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+/* Contenedor del contenido */
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Estilos de la marca (logo + título) - Izquierda */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto; /* Empuja todo lo demás a la derecha */
+}
+
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.navbar-title {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Contenedor de botones - Derecha */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto; /* Empuja los botones al extremo derecho */
+}
+
+/* Grupo de botones izquierdos (si los tienes) */
+.navbar-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+}
+
+/* Estilos de los botones */
+.navbar-button {
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.navbar-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Indicador de estado de conexión */
+.connection-status {
+  font-size: 12px;
+  margin-left: 6px;
+}
+
+.connection-status.connected {
+  color: #4caf50; /* Verde para conexión activa */
+}
+
+.connection-status.disconnected {
+  color: #f44336; /* Rojo para conexión inactiva */
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .navbar-content {
+    flex-direction: row; /* Mantenemos en fila */
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .navbar-brand {
+    order: 1;
+    margin-right: 0;
+  }
+  
+  .navbar-actions {
+    order: 3;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+  
+  .navbar-button {
+    font-size: 0.875rem;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-title {
+    font-size: 1.25rem;
+  }
+  
+  .navbar-actions {
+    gap: 4px;
+    justify-content: space-between;
+  }
+  
+  .navbar-button span {
+    display: none; /* Oculta el texto en móviles muy pequeños */
+  }
+  
+  .navbar-button .MuiButton-startIcon {
+    margin: 0; /* Ajusta el espaciado del icono */
+  }
+}

@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: sqlbloques
+      MYSQL_PASSWORD: sqlbloques
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./script/universidad.sql:/docker-entrypoint-initdb.d/01-universidad.sql
+      - ./script/sistema_ventas.sql:/docker-entrypoint-initdb.d/02-sistema_ventas.sql
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build: .
+    environment:
+      API_TOKEN: sE0eK7qoh4NeWnXqMZV5Tjr41oOzqincyh1tu0JhOv5
+      PORT: 3001
+      NODE_ENV: production
+      SQLITE_PATH: /app/data/database.sqlite
+      SEED_CONNECTIONS: "true"
+      SEED_DB_HOST: db
+      SEED_DB_PORT: 3306
+      SEED_DB_USER: sqlbloques
+      SEED_DB_PASSWORD: sqlbloques
+    ports:
+      - "3001:3001"
+    volumes:
+      - backend_data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
+  backend_data:

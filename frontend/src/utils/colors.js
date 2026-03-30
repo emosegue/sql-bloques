@@ -1,0 +1,11 @@
+export const COLORS = {
+  QUERY: '#1E88E5',
+  DML: '#FB8C00',
+  CONDITION: '#E53935',
+  VALUE: '#43A047',
+  TRANSACTION: '#8E24AA',
+  DDL: '#3949AB',
+  SORTING: '#FDD835',
+  JOIN: '#00ACC1',
+  WARNING: '#FFA500',
+};

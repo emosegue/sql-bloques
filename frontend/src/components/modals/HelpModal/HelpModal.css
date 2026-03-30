@@ -1,0 +1,77 @@
+/* Estilos del modal backdrop */
+.MuiModal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  /* Contenedor principal del modal */
+  .help-modal-container {
+    max-width: 600px;
+    min-width: 400px;
+    margin: auto;
+    margin-top: 10vh;
+    padding: 32px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    outline: none;
+  }
+  
+  /* Título del modal */
+  .help-modal-title {
+    text-align: center;
+    margin-bottom: 24px !important;
+    color: #1976d2;
+    font-weight: 600 !important;
+  }
+  
+  /* Secciones */
+  .help-section {
+    margin-bottom: 20px;
+  }
+  
+  .help-section-title {
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+    color: #333;
+    font-weight: 500 !important;
+  }
+  
+  /* Items de cada sección */
+  .help-item {
+    margin-bottom: 8px !important;
+    line-height: 1.6;
+  }
+  
+  /* Contenedor de acciones/botones */
+  .help-modal-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  
+  /* Botón */
+  .help-modal-actions button {
+    background-color: #1976d2 !important;
+    color: white !important;
+    padding: 8px 24px;
+    text-transform: none !important;
+  }
+  
+  /* Scrollbar personalizada (si es necesario) */
+  .help-modal-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .help-modal-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .help-modal-container::-webkit-scrollbar-thumb {
+    background: #1976d2;
+    border-radius: 4px;
+  }
+  
+  .help-modal-container::-webkit-scrollbar-thumb:hover {
+    background: #1565c0;
+  }

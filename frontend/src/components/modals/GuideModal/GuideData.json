@@ -1,0 +1,120 @@
+{
+  "es": {
+    "title": "Guía Práctica de Bloques",
+    "sections": [
+      {
+        "title": "SELECT",
+        "description": "Permite obtener datos de una tabla.",
+        "example": "SELECT users.* FROM users;",
+        "image": "sql_select_guide.png"
+      },
+      {
+        "title": "WHERE",
+        "description": "Filtra los resultados de una consulta según una condición.",
+        "example": "SELECT orders.* FROM orders WHERE total > 2;",
+        "image": "sql_where_guide.png"
+      },
+      {
+        "title": "JOIN",
+        "description": "Une dos tablas relacionadas.",
+        "example": "SELECT users.* FROM users INNER JOIN orders ON users.id = orders.user_id;",
+        "image": "sql_join_guide.png"
+      },
+      {
+        "title": "UNION",
+        "description": "Combina los resultados de dos consultas sin duplicados.",
+        "example": "SELECT users.id FROM users UNION SELECT orders.id FROM orders;",
+        "image": "sql_union_guide.png"
+      },
+      {
+        "title": "ORDER BY",
+        "description": "Ordena los resultados en orden ascendente o descendente.",
+        "example": "SELECT users.* FROM users ORDER BY name DESC;",
+        "image": "sql_order_by_guide.png"
+      },
+      {
+        "title": "LIMIT",
+        "description": "Limita la cantidad de resultados devueltos.",
+        "example": "SELECT users.* FROM users LIMIT 2;",
+        "image": "sql_limit_guide.png"
+      },
+      {
+        "title": "INSERT",
+        "description": "Agrega nuevos registros a una tabla.",
+        "example": "INSERT INTO users (nombre, email) VALUES ('Emanuel', 'emanuel@mail.com');",
+        "image": "sql_insert_guide.png"
+      },
+      {
+        "title": "UPDATE",
+        "description": "Modifica los registros de una tabla.",
+        "example": "UPDATE users SET users.name = 'Emanuel' WHERE users.email = 'emanuel@mail.com';",
+        "image": "sql_update_guide.png"
+      },
+      {
+        "title": "DELETE",
+        "description": "Elimina registros de una tabla.",
+        "example": "DELETE FROM users WHERE users.id = 1;",
+        "image": "sql_delete_guide.png"
+      }
+    ]
+  },
+  "en": {
+    "title": "Practical Guide to Blocks",
+    "sections": [
+      {
+        "title": "SELECT",
+        "description": "Allows retrieving data from a table.",
+        "example": "SELECT users.* FROM users;",
+        "image": "sql_select_guide.png"
+      },
+      {
+        "title": "WHERE",
+        "description": "Filters query results based on a condition.",
+        "example": "SELECT orders.* FROM orders WHERE total > 2;",
+        "image": "sql_where_guide.png"
+      },
+      {
+        "title": "JOIN",
+        "description": "Joins two related tables.",
+        "example": "SELECT users.* FROM users INNER JOIN orders ON users.id = orders.user_id;",
+        "image": "sql_join_guide.png"
+      },
+      {
+        "title": "UNION",
+        "description": "Combines results of two queries without duplicates.",
+        "example": "SELECT users.id FROM users UNION SELECT orders.id FROM orders;",
+        "image": "sql_union_guide.png"
+      },
+      {
+        "title": "ORDER BY",
+        "description": "Sorts results in ascending or descending order.",
+        "example": "SELECT users.* FROM users ORDER BY name DESC;",
+        "image": "sql_order_by_guide.png"
+      },
+      {
+        "title": "LIMIT",
+        "description": "Limits the number of returned results.",
+        "example": "SELECT users.* FROM users LIMIT 2;",
+        "image": "sql_limit_guide.png"
+      },
+      {
+        "title": "INSERT",
+        "description": "Adds new records to a table.",
+        "example": "INSERT INTO users (name, email) VALUES ('Emanuel', 'emanuel@mail.com');",
+        "image": "sql_insert_guide.png"
+      },
+      {
+        "title": "UPDATE",
+        "description": "Modifies records in a table.",
+        "example": "UPDATE users SET users.name = 'Emanuel' WHERE users.email = 'emanuel@mail.com';",
+        "image": "sql_update_guide.png"
+      },
+      {
+        "title": "DELETE",
+        "description": "Deletes records from a table.",
+        "example": "DELETE FROM users WHERE users.id = 1;",
+        "image": "sql_delete_guide.png"
+      }
+    ]
+  }
+}

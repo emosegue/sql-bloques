@@ -1,0 +1,57 @@
+/* Estilos generales del footer */
+.footer-container {
+    background-color: #3f51b5; /* Color principal */
+    padding: 16px 10px;
+    color: white;
+    margin-top: 32px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Contenido del footer */
+  .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-size: 0.875rem;
+  }
+  
+  /* Icono de universidad */
+  .university-icon {
+    margin-right: 8px;
+    font-size: 1rem;
+  }
+  
+  /* Enlace del footer */
+  .footer-link {
+    color: white !important;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .university-icon {
+      margin-right: 0;
+      margin-bottom: 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .footer-container {
+      padding: 12px 8px;
+    }
+    
+    .footer-content {
+      font-size: 0.75rem;
+    }
+  }

@@ -1,0 +1,39 @@
+/* src/components/nodes/DatabaseSchemaNode.css */
+
+.db-node {
+  cursor: move;
+  background: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 13px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.db-node__header {
+  font-weight: bold;
+  background: #1976d2;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px 6px 0 0;
+}
+
+.db-node__columns {
+  padding: 8px;
+}
+
+.db-node__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 2px 0;
+}
+
+.db-node__type {
+  font-size: 11px;
+  color: #777;
+}
