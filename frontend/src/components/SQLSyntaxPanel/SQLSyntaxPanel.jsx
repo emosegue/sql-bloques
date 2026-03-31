@@ -1,10 +1,11 @@
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { 
-  Paper, 
-  Typography, 
-  Box, 
-  Button 
+import {
+  Paper,
+  Typography,
+  Box,
+  Button,
+  Tooltip
 } from '@mui/material';
 import { FaClipboard, FaEraser } from 'react-icons/fa';
 import { i18n } from '../../i18n';
@@ -18,7 +19,7 @@ const SQLSyntaxPanel = ({
     <Paper
       sx={{
         padding: 2,
-        height: 700,
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -65,16 +66,45 @@ const SQLSyntaxPanel = ({
           gap: 2,
         }}
       >
+      <Tooltip title={i18n('COPY_BUTTON')} placement="top" sx={{ display: { xs: 'none', md: 'inline-flex', xl: 'none' } }}>
+        <span>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={onCopyToClipboard}
+            startIcon={<FaClipboard />}
+            disabled={!sqlQuery}
+            sx={{ minWidth: 0, display: { xs: 'none', md: 'inline-flex', xl: 'none' } }}
+          />
+        </span>
+      </Tooltip>
       <Button
         variant="outlined"
         color="primary"
         onClick={onCopyToClipboard}
         startIcon={<FaClipboard />}
         disabled={!sqlQuery}
+        sx={{ minWidth: 0, display: { xs: 'inline-flex', md: 'none', xl: 'inline-flex' } }}
       >
         {i18n('COPY_BUTTON')}
       </Button>
 
+      <Tooltip title={i18n('CLEAR_BUTTON')} placement="top" sx={{ display: { xs: 'none', md: 'inline-flex', xl: 'none' } }}>
+        <span>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={onClearQuery}
+            startIcon={<FaEraser />}
+            disabled={!sqlQuery}
+            sx={{
+              minWidth: 0,
+              display: { xs: 'none', md: 'inline-flex', xl: 'none' },
+              '&:hover': { backgroundColor: 'error.light', color: 'error.contrastText' },
+            }}
+          />
+        </span>
+      </Tooltip>
       <Button
         variant="outlined"
         color="secondary"
@@ -82,10 +112,9 @@ const SQLSyntaxPanel = ({
         startIcon={<FaEraser />}
         disabled={!sqlQuery}
         sx={{
-          '&:hover': {
-            backgroundColor: 'error.light',
-            color: 'error.contrastText',
-          },
+          minWidth: 0,
+          display: { xs: 'inline-flex', md: 'none', xl: 'inline-flex' },
+          '&:hover': { backgroundColor: 'error.light', color: 'error.contrastText' },
         }}
       >
         {i18n('CLEAR_BUTTON')}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Blockly from 'blockly';
 import 'blockly/blocks';
 import './blocks'
@@ -121,6 +121,15 @@ const BlocklyWorkspace = ({ onBlocksChange, databaseTables = null }) => {
       }
     };
   }, [toolboxJson, onBlocksChange, databaseTables]);
+
+  useEffect(() => {
+    if (!blocklyDiv.current) return;
+    const observer = new ResizeObserver(() => {
+      if (workspaceRef.current) Blockly.svgResize(workspaceRef.current);
+    });
+    observer.observe(blocklyDiv.current);
+    return () => observer.disconnect();
+  }, []);
 
   return <div ref={blocklyDiv} className="blocklyWorkspace" style={{ width: '100%', height: '100%' }} />;
 };

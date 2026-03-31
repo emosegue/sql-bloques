@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 -- Crear la base de datos
 CREATE DATABASE universidad;
 USE universidad;

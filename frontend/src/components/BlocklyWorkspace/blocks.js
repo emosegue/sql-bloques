@@ -52,12 +52,18 @@ Blockly.Blocks['sql_select'] = {
     try {
       const workspace = this.workspace_ || Blockly.getMainWorkspace();
       const tables = workspace?.tables || [];
+      const currentValue = this.getFieldValue ? this.getFieldValue('table') : null;
 
-      if (tables.length === 0) {
-        return [[i18n('SELECT_TABLE'), 'no_table']];
+      const baseOptions = tables.length > 0
+        ? tables.map((table) => [table.name, table.name])
+        : [[i18n('SELECT_TABLE'), 'no_table']];
+
+      if (currentValue && !baseOptions.some(o => o[1] === currentValue)) {
+        const label = currentValue === 'no_table' ? i18n('SELECT_TABLE') : currentValue;
+        baseOptions.unshift([label, currentValue]);
       }
 
-      return tables.map((table) => [table.name, table.name]);
+      return baseOptions;
     } catch (error) {
       return [[i18n('ERROR_LOADING'), 'error']];
     }
@@ -138,7 +144,15 @@ Blockly.Blocks['sql_attribute'] = {
       attributes.unshift(['*', '*']);
     }
 
-    return attributes.length > 0 ? attributes : [['*', '*']];
+    if (attributes.length === 0) return [['*', '*']];
+
+    // Preserve '*' as a valid option if the block currently holds it, preventing Blockly dropdown warnings
+    const currentValue = this.getFieldValue ? this.getFieldValue('ATTRIBUTE') : null;
+    if (currentValue === '*' && !attributes.some(o => o[1] === '*')) {
+      attributes.unshift(['*', '*']);
+    }
+
+    return attributes;
   },
 
   updateAttributes: function () {
@@ -325,6 +339,7 @@ Blockly.Blocks['sql_condition'] = {
       .appendField(new Blockly.FieldDropdown(CATEGORIES, function (newCategory) {
         updateOperatorDropdown(newCategory);
         updateLayout(newCategory);
+        updateColor(newCategory);
       }), 'CATEGORY');
 
     block.appendStatementInput('CONDITION1')
@@ -340,13 +355,22 @@ Blockly.Blocks['sql_condition'] = {
 
     block.setPreviousStatement(true, ['sql_condition']);
     block.setNextStatement(true, ['sql_condition', 'sql_where']);
-    block.setColour(COLORS.CONDITION);
+    block.setColour(COLORS.OPERATOR_LOGICAL);
     block.setTooltip(getTooltip('sql_condition'));
 
     function updateOperatorDropdown(category) {
       const operatorDropdown = block.getField('OPERATOR');
       operatorDropdown.menuGenerator_ = OPERATORS[category];
       operatorDropdown.setValue(OPERATORS[category][0][1]);
+    }
+
+    function updateColor(category) {
+      const colorMap = {
+        LOGICAL: COLORS.OPERATOR_LOGICAL,
+        UNARY: COLORS.OPERATOR_UNARY,
+        ARITHMETIC: COLORS.OPERATOR_ARITHMETIC,
+      };
+      block.setColour(colorMap[category]);
     }
 
     function updateLayout(category) {
@@ -624,12 +648,18 @@ Blockly.Blocks['sql_join'] = {
     try {
       const workspace = this.workspace_ || Blockly.getMainWorkspace();
       const tables = workspace?.tables || [];
+      const currentValue = this.getFieldValue ? this.getFieldValue('table') : null;
 
-      if (tables.length === 0) {
-        return [[i18n('SELECT_TABLE'), 'no_table']];
+      const baseOptions = tables.length > 0
+        ? tables.map((table) => [table.name, table.name])
+        : [[i18n('SELECT_TABLE'), 'no_table']];
+
+      if (currentValue && !baseOptions.some(o => o[1] === currentValue)) {
+        const label = currentValue === 'no_table' ? i18n('SELECT_TABLE') : currentValue;
+        baseOptions.unshift([label, currentValue]);
       }
 
-      return tables.map((table) => [table.name, table.name]);
+      return baseOptions;
     } catch (error) {
       return [[i18n('ERROR_LOADING'), 'error']];
     }

@@ -1,6 +1,7 @@
 services:
   db:
     image: mysql:8.0
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_USER: sqlbloques
@@ -10,6 +11,8 @@ services:
     volumes:
       - ./script/universidad.sql:/docker-entrypoint-initdb.d/01-universidad.sql
       - ./script/sistema_ventas.sql:/docker-entrypoint-initdb.d/02-sistema_ventas.sql
+      - ./script/04-hospital.sql:/docker-entrypoint-initdb.d/03-hospital.sql
+      - ./script/03-grants.sql:/docker-entrypoint-initdb.d/04-grants.sql
       - mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
