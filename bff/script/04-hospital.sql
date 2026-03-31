@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 -- 1. Crear la base de datos
 CREATE DATABASE IF NOT EXISTS hospital;
 USE hospital;

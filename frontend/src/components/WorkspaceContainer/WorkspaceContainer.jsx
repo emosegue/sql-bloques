@@ -8,11 +8,12 @@ import { i18n } from '../../i18n'
 
 const WorkspaceContainer = ({ onBlocksChange, databaseTables }) => {
   const [tabIndex, setTabIndex] = useState(0)
+  const [schemaVisited, setSchemaVisited] = useState(false)
   const normalizedSchema = useMemo(() => getNormalizedSchema(databaseTables), [databaseTables])
-
 
   const handleChange = (event, newValue) => {
     setTabIndex(newValue)
+    if (newValue === 1) setSchemaVisited(true)
   }
 
   return (
@@ -45,7 +46,7 @@ const WorkspaceContainer = ({ onBlocksChange, databaseTables }) => {
         <div
           className={`tab-panel ${tabIndex === 1 ? 'tab-panel--visible' : 'tab-panel--hidden'}`}
         >
-          <SchemaView databaseTables={normalizedSchema} />
+          {schemaVisited && <SchemaView databaseTables={normalizedSchema} />}
         </div>
       </Box>
     </Box>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import './App.css';
 // Rule 2.1 (bundle-barrel-imports): direct imports avoid loading the entire @mui/material barrel
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Grid2 from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -14,7 +14,6 @@ import Footer from './components/UI/Footer/Footer';
 import SnackbarComponent from './components/UI/Snackbar/CustomSnackbar';
 import SQLSyntaxPanel from './components/SQLSyntaxPanel/SQLSyntaxPanel';
 import ResultsTable from './components/ResultsTable/ResultsTable';
-import ErrorReportButton from './components/ErrorReportButton/ErrorReportButton';
 import MobileWarningBlocker from './components/MobileWarningBlocker/MobileWarningBlocker';
 import { getCurrentLanguage, i18n } from './i18n';
 import { generateSQL } from './core/blockly-to-sql/sql-generator';
@@ -30,7 +29,7 @@ const API_URL = '/api/connections';
 
 const DEFAULT_PAGINATION = {
   page: 0,
-  rowsPerPage: 10,
+  rowsPerPage: 5,
   totalResults: 0,
   currentFrom: 0,
   currentTo: 0
@@ -38,7 +37,6 @@ const DEFAULT_PAGINATION = {
 
 function App() {
   // State hooks
-  const [blocksData, setBlocksData] = useState([]);
   const [sqlQuery, setSqlQuery] = useState('');
   const [queryResult, setQueryResult] = useState([]);
   const [databaseTables, setDatabaseTables] = useState([]);
@@ -92,9 +90,7 @@ function App() {
   }, []);
 
   // Handlers
-  const handleBlocksChange = useCallback((blocks) => {
-    setBlocksData(blocks);
-  }, []);
+  const handleBlocksChange = () => {};
 
   const handleClearWorkspace = () => {
     setSqlQuery('');
@@ -161,7 +157,7 @@ function App() {
     await executeQueryWithPagination(pagination.page, pagination.rowsPerPage, true);
   };
 
-  const handleChangePage = async (event, newPage) => {
+  const handleChangePage = async (_event, newPage) => {
     setPagination(prev => ({ ...prev, page: newPage }));
     await executeQueryWithPagination(newPage, pagination.rowsPerPage);
   };
@@ -173,29 +169,9 @@ function App() {
   };
 
   const handleCopyToClipboard = () => {
-    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-      navigator.clipboard.writeText(sqlQuery)
-        .then(() => showSnackbar(i18n('QUERY_COPIED'), 'info', 2000))
-        .catch(() => showSnackbar(i18n('ERROR_COPYING'), 'error', 2000));
-    } else {
-      try {
-        const textarea = document.createElement('textarea');
-        textarea.value = sqlQuery;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        const success = document.execCommand('copy');
-        document.body.removeChild(textarea);
-        if (success) {
-          showSnackbar(i18n('QUERY_COPIED'), 'info', 2000);
-        } else {
-          throw new Error();
-        }
-      } catch (e) {
-        showSnackbar(i18n('ERROR_COPYING'), 'error', 2000);
-      }
-    }
+    navigator.clipboard.writeText(sqlQuery)
+      .then(() => showSnackbar(i18n('QUERY_COPIED'), 'info', 2000))
+      .catch(() => showSnackbar(i18n('ERROR_COPYING'), 'error', 2000));
   };
 
   // Helper functions
@@ -266,7 +242,7 @@ function App() {
   };
 
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
       {/* Rule 6.9 (rendering-conditional-render): ternary is safer than && for components */}
       {showFTU ? (
         <Suspense fallback={null}>
@@ -279,33 +255,33 @@ function App() {
         onGuideClick={() => setShowGuideModal(true)}
         onSettingsClick={() => setShowSettingsModal(true)}
         connectionStatus={connectionStatus}
+        currentConnection={currentConnection}
       />
 
       <MobileWarningBlocker />
-      <ErrorReportButton />
-      <Container sx={{ flex: 1, marginTop: 4 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={9}>
-            <Paper sx={{ padding: 2, height: 700, overflow: 'hidden' }}>
+      <Container maxWidth={false} sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto', pt: 2, pb: 1 }}>
+        <Grid2 container spacing={2} sx={{ flex: '1 0 auto', alignItems: 'stretch' }}>
+          <Grid2 size={{ xs: 12, md: 9 }} sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Paper sx={{ padding: 2, flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
               <BlocklyWorkspaceContainer
                 onBlocksChange={handleBlocksChange}
                 databaseTables={databaseTables}
               />
             </Paper>
-          </Grid>
+          </Grid2>
 
-          <Grid item xs={12} md={3}>
-            <div className="sql-syntax-panel">
+          <Grid2 size={{ xs: 12, md: 3 }} sx={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="sql-syntax-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
               <SQLSyntaxPanel
                 sqlQuery={sqlQuery}
                 onCopyToClipboard={handleCopyToClipboard}
                 onClearQuery={handleClearWorkspace}
               />
             </div>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
 
-        <Box sx={{ marginTop: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
+        <Box sx={{ marginTop: 2, marginBottom: 2, display: 'flex', justifyContent: 'center', gap: 2, flexShrink: 0 }}>
           <Button variant="contained" color="secondary" onClick={handleGenerateQuery}>
             {i18n('GENERATE_QUERY')}
           </Button>
@@ -314,18 +290,16 @@ function App() {
           </Button>
         </Box>
 
-        <Grid container spacing={3} sx={{ marginTop: 1 }}>
-          <Grid item xs={12}>
-            <div className="results-table">
-              <ResultsTable
-                queryResult={queryResult}
-                pagination={pagination}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </div>
-          </Grid>
-        </Grid>
+        <Box sx={{ flexShrink: 0 }}>
+          <div className="results-table">
+            <ResultsTable
+              queryResult={queryResult}
+              pagination={pagination}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </div>
+        </Box>
       </Container>
 
       {/* Modals — lazy loaded: bundle is fetched only when the modal is first opened */}

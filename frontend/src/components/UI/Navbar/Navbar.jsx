@@ -6,6 +6,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Tooltip,
   useMediaQuery,
   useTheme
 } from '@mui/material';
@@ -15,7 +16,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import logo from '../../../assets/icon.jpg';
 import { i18n } from '../../../i18n/';
 
-function Navbar({ onHelpClick, onDbClick, onGuideClick, onSettingsClick, connectionStatus }) {
+function Navbar({ onHelpClick, onDbClick, onGuideClick, onSettingsClick, connectionStatus, currentConnection }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -60,11 +61,13 @@ function Navbar({ onHelpClick, onDbClick, onGuideClick, onSettingsClick, connect
             </MenuItem>
             <MenuItem onClick={() => handleMenuClick(onDbClick)}>
               <FaDatabase style={{ marginRight: 8 }} /> {i18n('NAVBAR_CONNECTIONS')}
-              <CircleIcon sx={{
-                fontSize: 12,
-                ml: 1,
-                color: connectionStatus === 'Conectado' ? 'green' : 'red'
-              }} />
+              <Tooltip title={connectionStatus === 'Conectado' && currentConnection?.name ? <span>Base de datos: <strong>{currentConnection.name}</strong></span> : ''} placement="right">
+                <CircleIcon sx={{
+                  fontSize: 12,
+                  ml: 1,
+                  color: connectionStatus === 'Conectado' ? 'green' : 'red'
+                }} />
+              </Tooltip>
             </MenuItem>
           </Menu>
         </>
@@ -81,11 +84,13 @@ function Navbar({ onHelpClick, onDbClick, onGuideClick, onSettingsClick, connect
           </Button>
           <Button color="inherit" startIcon={<FaDatabase />} onClick={onDbClick} className="navbar-db-btn">
             {i18n('NAVBAR_CONNECTIONS')}
-            <CircleIcon sx={{
-              fontSize: 12,
-              ml: 1,
-              color: connectionStatus === 'Conectado' ? 'green' : 'red'
-            }} />
+            <Tooltip title={connectionStatus === 'Conectado' && currentConnection?.name ? <span>Base de datos: <strong>{currentConnection.name}</strong></span> : ''} placement="bottom">
+              <CircleIcon sx={{
+                fontSize: 12,
+                ml: 1,
+                color: connectionStatus === 'Conectado' ? 'green' : 'red'
+              }} />
+            </Tooltip>
           </Button>
         </Box>
       )}
