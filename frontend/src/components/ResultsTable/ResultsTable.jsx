@@ -54,10 +54,7 @@ const ResultsTable = ({
                 </tr>
               </thead>
               <tbody>
-                {queryResult
-                  .slice(pagination.page * pagination.rowsPerPage,
-                         pagination.page * pagination.rowsPerPage + pagination.rowsPerPage)
-                  .map((row, index) => (
+                {queryResult.map((row, index) => (
                     <tr key={index}>
                       {Object.values(row).map((value, i) => (
                         <td

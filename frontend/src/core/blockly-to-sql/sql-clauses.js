@@ -1,4 +1,4 @@
-import { i18n } from '../../i18n';
+import { i18n, getBlockLabel, getDataTypeLabel } from '../../i18n';
 import { blockToSQL } from './sql-generator';
 
 export function generateSelect(block) {
@@ -41,7 +41,7 @@ export function generateSelect(block) {
           !['sql_where', 'sql_order_by', 'sql_limit', 'sql_union'].includes(afterJoin.type)
         ) {
           throw new Error(
-            `${i18n('SYNTAX_ERROR')}\n\n${i18n('JOIN_BLOCK_INVALID_NEXT')} ${afterJoin.type}`
+            `${i18n('SYNTAX_ERROR')}\n\n${i18n('JOIN_BLOCK_INVALID_NEXT')} ${getBlockLabel(afterJoin.type)}`
           );
         }
         nextBlock = afterJoin;
@@ -247,11 +247,11 @@ export function generateConditionClause(block) {
       case 'NULL':
         return 'NULL';
       default:
-        throw new Error(`${i18n('SYNTAX_ERROR')}\n\n${i18n('UNRECOGNIZED_TYPE')} ${type}`);
+        throw new Error(`${i18n('SYNTAX_ERROR')}\n\n${i18n('UNRECOGNIZED_TYPE')} ${getDataTypeLabel(type)}`);
     }
   }
 
-  throw new Error(`${i18n('SYNTAX_ERROR')}\n\n${i18n('UNSUPPORTED_BLOCK_TYPE')} ${block.type}`);
+  throw new Error(`${i18n('SYNTAX_ERROR')}\n\n${i18n('UNSUPPORTED_BLOCK_TYPE')} ${getBlockLabel(block.type)}`);
 }
 
 export function generateUpdate(block) {
@@ -443,6 +443,6 @@ function formatValue(value, valueType, block) {
     case 'NULL':
       return 'NULL';
     default:
-      throw new Error(`${i18n('SYNTAX_ERROR')}\n\n${i18n('UPDATE_UNRECOGNIZED_TYPE')} ${valueType}`);
+      throw new Error(`${i18n('SYNTAX_ERROR')}\n\n${i18n('UPDATE_UNRECOGNIZED_TYPE')} ${getDataTypeLabel(valueType)}`);
   }
 }

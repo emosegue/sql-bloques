@@ -31,7 +31,9 @@
         "items": [
           { "text": "• Punto verde = Conexión activa." },
           { "text": "• Siempre prueba las conexiones antes de ejecutar consultas." },
-          { "text": "• Verifica los permisos de usuario de la base de datos." }
+          { "text": "• Verifica los permisos de usuario de la base de datos." },
+          { "text": "• Los resultados se paginan en el servidor: al cambiar de página se vuelve a consultar la base." },
+          { "text": "• En la base <strong>universidad</strong> podés practicar JOINs entre <strong>docentes</strong> y <strong>materias</strong> (ej. Jorge Rodríguez → Técnicas de Meditación I)." }
         ]
       }
     ],
@@ -69,7 +71,9 @@
         "items": [
           { "text": "• Green dot = Active connection." },
           { "text": "• Always test connections before executing queries." },
-          { "text": "• Verify user permissions on the database." }
+          { "text": "• Verify user permissions on the database." },
+          { "text": "• Results are paginated on the server: changing pages fetches a new page from the database." },
+          { "text": "• In the <strong>universidad</strong> database you can practice JOINs between <strong>docentes</strong> and <strong>materias</strong> (e.g. Jorge Rodríguez → Técnicas de Meditación I)." }
         ]
       }
     ],

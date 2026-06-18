@@ -60,8 +60,9 @@ class DatabaseController {
       let queryResults: mysql.RowDataPacket[] = [];
   
       if (isSelectQuery) {
-        // Contar total de resultados sin paginar
-        const [countResult] = await connection.query<mysql.RowDataPacket[]>(`SELECT COUNT(*) as total FROM (${cleanedQuery}) as subquery`);
+        // Contar total de resultados sin paginar (SELECT 1 evita ER_DUP_FIELDNAME por columnas homónimas)
+        const countQuery = this.buildSelectCountQuery(cleanedQuery);
+        const [countResult] = await connection.query<mysql.RowDataPacket[]>(countQuery);
         totalResults = countResult[0].total;
         totalPages = Math.ceil(totalResults / results);
   
@@ -184,9 +185,27 @@ class DatabaseController {
     return tableSchema;
   };
 
+  private buildSelectCountQuery(query: string): string {
+    const withoutPagination = query
+      .replace(/\s+LIMIT\s+\d+(\s*,\s*\d+)?\s*$/i, '')
+      .replace(/\s+ORDER\s+BY[\s\S]*$/i, '');
+
+    // UNION: contar sobre la consulta completa. SELECT 1 por rama colapsa filas (UNION deduplica).
+    if (/\bUNION\b/i.test(withoutPagination)) {
+      return `SELECT COUNT(*) as total FROM (${withoutPagination}) as subquery`;
+    }
+
+    const inner = withoutPagination.replace(
+      /^\s*SELECT\s+(?:DISTINCT\s+)?[\s\S]+?\s+FROM\s/i,
+      'SELECT 1 FROM ',
+    );
+
+    return `SELECT COUNT(*) as total FROM (${inner}) as subquery`;
+  };
+
   private handleDatabaseError(error: any, res: Response, next: NextFunction, lang: SupportedLanguage = 'es'): void {
     const { code, sqlMessage = '' } = error;
-    let translatedMessage = i18n(code, {}, lang) || `Error desconocido: ${sqlMessage || 'No hay detalles disponibles.'}`;
+    let translatedMessage = i18n('ERROR_UNKNOWN', {}, lang);
 
     switch (code) {
       case 'ER_ROW_IS_REFERENCED_2': {
@@ -270,6 +289,17 @@ class DatabaseController {
         if (match) {
           const [, column] = match;
           translatedMessage = i18n('ERROR_UNKNOWN_COLUMN', { column }, lang);
+        }
+        break;
+      }
+
+      case 'ER_DUP_FIELDNAME': {
+        const match = sqlMessage.match(/Duplicate column name '(.+?)'/i);
+        if (match) {
+          const [, column] = match;
+          translatedMessage = i18n('ERROR_DUP_FIELDNAME', { column }, lang);
+        } else {
+          translatedMessage = i18n('ERROR_DUP_FIELDNAME', { column: '?' }, lang);
         }
         break;
       }

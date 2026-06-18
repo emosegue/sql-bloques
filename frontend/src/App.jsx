@@ -17,6 +17,7 @@ import ResultsTable from './components/ResultsTable/ResultsTable';
 import MobileWarningBlocker from './components/MobileWarningBlocker/MobileWarningBlocker';
 import { getCurrentLanguage, i18n } from './i18n';
 import { generateSQL } from './core/blockly-to-sql/sql-generator';
+import { applyAutoAliases } from './core/sql/auto-alias';
 // Rule 2.4 (bundle-dynamic-imports): modals are only shown on user interaction,
 // lazy loading keeps them out of the initial bundle chunk
 const DbModal = lazy(() => import('./components/modals/DBModal/DbModal'));
@@ -154,7 +155,8 @@ function App() {
       return;
     }
 
-    await executeQueryWithPagination(pagination.page, pagination.rowsPerPage, true);
+    setPagination(prev => ({ ...prev, page: 0 }));
+    await executeQueryWithPagination(0, pagination.rowsPerPage, true);
   };
 
   const handleChangePage = async (_event, newPage) => {
@@ -189,11 +191,15 @@ function App() {
     if (!currentConnection || !sqlQuery) return;
 
     try {
+      const executableQuery = applyAutoAliases(
+        sqlQuery.trim().replace(/;\s*$/, ''),
+        databaseTables
+      );
       const response = await axios.post(
         `${API_URL}/execute`,
         {
           connection_params: currentConnection,
-          query: sqlQuery.trim().replace(/;\s*$/, ''),
+          query: executableQuery,
           language: getCurrentLanguage(),
           page: currentPage + 1,
           results: currentRowsPerPage

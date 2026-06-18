@@ -9,15 +9,17 @@ const DatabaseSchemaNode = ({ data }) => {
     <div className="db-node">
       <div className="db-node__header">{data.table}</div>
       <div className="db-node__columns">
-        {data.columns.map((col, i) => (
-          <div key={i} className="db-node__row">
+        {data.columns.map((col) => (
+          <div key={col.name} className="db-node__row">
             <Handle
               type="target"
               position={Position.Left}
               id={`in-${col.name}`}
-              style={{ opacity: 0 }}
+              className={`db-node__handle db-node__handle--target ${
+                col.isPrimary ? 'db-node__handle--visible' : ''
+              }`}
             />
-            <span>
+            <span className="db-node__name">
               {col.name}
               {col.isPrimary && ' 🔑'}
               {col.isForeign && ' 🔗'}
@@ -28,7 +30,9 @@ const DatabaseSchemaNode = ({ data }) => {
               type="source"
               position={Position.Right}
               id={`out-${col.name}`}
-              style={{ opacity: 0 }}
+              className={`db-node__handle db-node__handle--source ${
+                col.isForeign ? 'db-node__handle--visible' : ''
+              }`}
             />
           </div>
         ))}
