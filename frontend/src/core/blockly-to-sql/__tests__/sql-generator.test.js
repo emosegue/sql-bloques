@@ -1,5 +1,11 @@
 import { generateSQL } from '../sql-generator.js';
+import { translations } from '../../../i18n';
 import * as mockCases from './block-mocks.js';
+
+const t = translations.es;
+
+const syntaxError = (key) =>
+  `${t.SYNTAX_ERROR} ${t[key]}`.replace(/\s+/g, ' ').trim();
 
 const mockWorkspace = (block) => ({
   getTopBlocks: () => [block]
@@ -9,7 +15,7 @@ describe('Generic cases', () => {
   it('INVALID STRUCTURE', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockGenericCase1()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Estructura inválida");
+    expect(cleanSql).toBe(syntaxError('INVALID_STRUCTURE'));
   });
 
 })
@@ -42,13 +48,13 @@ describe('Select cases', () => {
   it('SELECT WITH INEXISTENT TABLE', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockSelectCase5()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Falta especificar la tabla en el bloque SELECT");
+    expect(cleanSql).toBe(syntaxError('SELECT_TABLE_MISSING'));
   });
 
   it('SELECT WITHOUT SELECTING ATTRIBUTE', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockSelectCase6()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Se esperaba un atributo dentro del bloque SELECT");
+    expect(cleanSql).toBe(syntaxError('SELECT_ATTRIBUTE_EXPECTED'));
   });
 
   it('SELECT WITH > OPERATOR', () => {
@@ -108,13 +114,13 @@ describe('Select cases', () => {
   it('SELECT WITH MORE THAN TWO JOINS', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockSelectCase16()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Solo se permite un JOIN por instrucción.");
+    expect(cleanSql).toBe(syntaxError('JOIN_ONLY_ONE_ALLOWED'));
   });
 
   it('SELECT WITH JOIN WITHOUT ON CLAUSE', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockSelectCase20()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Se esperaba una condición ON en JOIN");
+    expect(cleanSql).toBe(syntaxError('JOIN_ON_EXPECTED'));
   });
 
   it('SELECT WITH VALID UNION', () => {
@@ -126,13 +132,13 @@ describe('Select cases', () => {
   it('SELECT WITH MORE THAN THREE UNIONS', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockSelectCase18()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Solo se permite un UNION por instrucción.");
+    expect(cleanSql).toBe(syntaxError('UNION_ONLY_ONE_ALLOWED'));
   });
 
   it('SELECT WITH INVALID UNION STRUCTURE', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockSelectCase19()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Se esperaba un bloque SELECT luego del bloque UNION");
+    expect(cleanSql).toBe(syntaxError('UNION_SELECT_EXPECTED'));
   });
 
   it('SELECT WITH JOIN AND UNION', () => {
@@ -171,13 +177,13 @@ describe('Insert cases', () => {
   it('INSERT ERROR AMOUNT OF COLUMN / VALUES', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockInsertCaseError1()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Cantidad de columnas y valores no coinciden en INSERT");
+    expect(cleanSql).toBe(syntaxError('INSERT_COLUMNS_VALUES_MISMATCH'));
   });
 
   it('INSERT WITH NOT SPECIFIED COLUMNS', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockInsertCaseError2()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Falta especificar columnas en INSERT");
+    expect(cleanSql).toBe(syntaxError('INSERT_COLUMNS_MISSING'));
   });
 
 })
@@ -204,13 +210,13 @@ describe('Update cases', () => {
   it('UPDATE SIMPLE WITH ERROR', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockUpdateCaseError1()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Falta cláusula SET válida en UPDATE");
+    expect(cleanSql).toBe(syntaxError('UPDATE_SET_MISSING'));
   });
 
   it('UPDATE SIMPLE WITH ERROR', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockUpdateCaseError2()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Falta especificar la tabla en UPDATE");
+    expect(cleanSql).toBe(syntaxError('UPDATE_TABLE_MISSING'));
   });
 
 
@@ -232,6 +238,6 @@ describe('Delete cases', () => {
   it('DELETE ERROR WITHOUT TABLE', () => {
     const sql = generateSQL(mockWorkspace(mockCases.mockDeleteCaseError1()));
     const cleanSql = sql.replace(/\s+/g, ' ').trim();
-    expect(cleanSql).toBe("Error de sintaxis: Falta especificar la tabla en DELETE");
+    expect(cleanSql).toBe(syntaxError('DELETE_TABLE_MISSING'));
   });
 });

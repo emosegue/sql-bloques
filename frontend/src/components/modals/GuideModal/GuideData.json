@@ -17,7 +17,7 @@
       {
         "title": "JOIN",
         "description": "Une dos tablas relacionadas.",
-        "example": "SELECT users.* FROM users INNER JOIN orders ON users.id = orders.user_id;",
+        "example": "SELECT d.nombre, m.nombre FROM docentes d INNER JOIN materias m ON d.id = m.docente_id;",
         "image": "sql_join_guide.png"
       },
       {
@@ -41,7 +41,7 @@
       {
         "title": "INSERT",
         "description": "Agrega nuevos registros a una tabla.",
-        "example": "INSERT INTO users (nombre, email) VALUES ('Emanuel', 'emanuel@mail.com');",
+        "example": "INSERT INTO alumnos (nombre, apellido, dni, fecha_nacimiento) VALUES ('Emanuel', 'Mosegue', '99887766', '2000-01-01');",
         "image": "sql_insert_guide.png"
       },
       {
@@ -76,7 +76,7 @@
       {
         "title": "JOIN",
         "description": "Joins two related tables.",
-        "example": "SELECT users.* FROM users INNER JOIN orders ON users.id = orders.user_id;",
+        "example": "SELECT d.nombre, m.nombre FROM docentes d INNER JOIN materias m ON d.id = m.docente_id;",
         "image": "sql_join_guide.png"
       },
       {
@@ -100,7 +100,7 @@
       {
         "title": "INSERT",
         "description": "Adds new records to a table.",
-        "example": "INSERT INTO users (name, email) VALUES ('Emanuel', 'emanuel@mail.com');",
+        "example": "INSERT INTO alumnos (nombre, apellido, dni, fecha_nacimiento) VALUES ('Emanuel', 'Mosegue', '99887766', '2000-01-01');",
         "image": "sql_insert_guide.png"
       },
       {

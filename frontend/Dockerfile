@@ -16,7 +16,7 @@ ARG BASE_PATH=/
 RUN VITE_BASE_PATH=${BASE_PATH} npm run build
 
 # ── Stage 2: Serve with Nginx ─────────────────────────────────────────────────
-FROM nginx:alpine
+FROM nginx:latest
 
 # Copy built static files
 COPY --from=build /app/build /usr/share/nginx/html

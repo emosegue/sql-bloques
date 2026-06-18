@@ -82,15 +82,63 @@ Volver a comentar la línea una vez creadas.
 
 ## Bases de datos educativas
 
-Pre-seeded al primer arranque del contenedor MySQL:
+Pre-seeded al primer arranque del contenedor MySQL (scripts en `bff/script/`).
+Los scripts solo se ejecutan cuando el volumen `mysql_data` está vacío.
 
 | Base de datos | Descripción |
 |---------------|-------------|
-| `universidad` | Alumnos, materias, docentes, inscripciones |
-| `sistema_ventas` | Clientes, productos, empleados, ventas |
-| `hospital` | Pacientes, médicos, turnos, internaciones, diagnósticos |
+| `universidad` | Gestión académica: alumnos, docentes, materias, inscripciones, exámenes y notas |
+| `sistema_ventas` | Clientes, productos, empleados, ventas y detalles |
+| `hospital` | Pacientes, médicos, especialidades, turnos, internaciones y diagnósticos |
 
 Usuario de acceso: `sqlbloques` / `sqlbloques`
+
+### Base `universidad` (demo de exposición)
+
+**Tablas:** `alumnos`, `docentes`, `materias`, `inscripciones`, `examenes`, `notas`
+
+| Tabla | Relaciones |
+|-------|------------|
+| `materias` | `docente_id` → `docentes` (opcional) |
+| `inscripciones` | `alumno_id` → `alumnos`, `materia_id` → `materias` |
+| `examenes` | `materia_id` → `materias` |
+| `notas` | `alumno_id` → `alumnos`, `examen_id` → `examenes` |
+
+**Datos de ejemplo:**
+- Primer alumno: **Emanuel Mosegue**
+- Docentes y materias (útiles para JOINs en vivo):
+
+| Docente | Materia | Código |
+|---------|---------|--------|
+| Jorge Rodríguez | Técnicas de Meditación I | MED101 |
+| Gerardo Parra | Jardinería Avanzada | JAR301 |
+| Laura Cecchi | Lógica en Fórmulas de Helado | HEL201 |
+| Ignacio Sampedro | Teoría de Juegos… de Mesa | JUE401 |
+
+**Consulta sugerida para la demo:**
+
+```sql
+SELECT d.nombre, d.apellido, m.nombre AS materia, m.codigo
+FROM docentes d
+JOIN materias m ON m.docente_id = d.id;
+```
+
+**Recargar datos tras cambiar los scripts SQL:**
+
+```bash
+docker compose -f infra/docker-compose.yml --env-file .env down -v
+docker compose -f infra/docker-compose.yml --env-file .env up -d --build
+```
+
+---
+
+## Tests
+
+```bash
+cd frontend && npm test
+```
+
+Cubre generación SQL desde bloques, mensajes de error i18n (ES/EN) y renderizado de resultados paginados.
 
 ---
 
@@ -101,7 +149,7 @@ sqlbloques/
 ├── infra/                  # Docker Compose (producción y desarrollo)
 ├── bff/                    # API Node.js + Express + TypeScript
 │   ├── src/
-│   └── script/             # Scripts SQL de inicialización
+│   └── script/             # Scripts SQL de inicialización (ver script/README.md)
 ├── frontend/               # React + Vite
 │   └── src/
 ├── .env.example            # Plantilla de variables de entorno
